@@ -272,4 +272,78 @@ public class ConsonantCounter {
 
 
 
+
+
+ArrayList
+
+
+import java.util.*;
+
+public class Address {
+    String building_number, area, city;
+    int zip_code;
+
+    // Constructor
+    Address(String building_number, String area, String city, int zip_code) {
+        this.building_number = building_number;
+        this.area = area;
+        this.city = city;
+        this.zip_code = zip_code;
+    }
+
+    // Getter for zip_code
+    int getZip_code() {
+        return zip_code;
+    }
+
+    @Override
+    public String toString() {
+        return building_number + ", " + area + ", " + city + ", " + zip_code;
+    }
+}
+
+class Test {
+    public static void main(String[] args) {
+        // Task 1: Create an empty ArrayList of Address type
+        ArrayList<Address> addressList = new ArrayList<>();
+
+        // Task 2: Add the following objects in the ArrayList
+        addressList.add(new Address("19/A", "Dhanmondi", "Dhaka", 1209));
+        addressList.add(new Address("2/A", "Tejgaon", "Dhaka", 1215));
+        addressList.add(new Address("65", "Nirala", "Khulna", 9100));
+
+        // Task 3: Add the below object at index 1 of the ArrayList
+        addressList.add(1, new Address("215", "Aamtola", "Barishal", 8200));
+
+        // Task 4: Set the object at index 2 to [6] Page3of4 "36", "Gulshan", "Dhaka", 1212
+        addressList.set(2, new Address("36", "Gulshan", "Dhaka", 1212));
+
+        // Task 5: Sort the ArrayList in ascending order of zip codes using a comparator
+        Collections.sort(addressList, new Comparator<Address>() {
+            @Override
+            public int compare(Address a1, Address a2) {
+                return Integer.compare(a1.getZip_code(), a2.getZip_code());
+            }
+        });
+
+        // Print the ArrayList after sorting
+        System.out.println("Sorted Address List (Ascending order of zip code):");
+        for (Address address : addressList) {
+            System.out.println(address);
+        }
+
+        // Delete the object at index 2
+        addressList.remove(2);
+
+        // Print the ArrayList after deletion
+        System.out.println("\nAddress List after deleting object at index 2:");
+        for (Address address : addressList) {
+            System.out.println(address);
+        }
+    }
+}
+
+
+
+
                          
