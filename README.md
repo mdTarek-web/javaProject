@@ -95,7 +95,7 @@ public class NumberOperations {
 
 
 
-
+(a) Suppose that you are required to write a Java programfor implementingaGUIusinganylayout.GUI initiallycontainsasinglebuttonnamedADD. ADDbuttondynamicallyaddsanewbuttontotheframewhenit isclicked.Eachnewbuttonshouldhaveaunique label too(suchasb1, b2,b3...).Notethat thebuttonsor labelsshouldnotoverlap.Nowdothefollowingtasktodemonstrateyourskill:
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -136,7 +136,140 @@ public class DynamicButtonGUI {
     public static void main(String[] args) {
         new DynamicButtonGUI();
     }
+}                          
+
+
+
+
+
+
+Asfaq,afirst-yearprogrammingstudent, learnedhowtofindthehighestnumberfromanarrayusingtheJava program.Excitedwithhisnewfoundknowledge,hestartedtowonder ifhecouldconcurrentlydothesamefor multiplearrays.OneofhisseniorstoldhimtouseThreadwhichfacilitatestorunmultipletasksconcurrently. Basedontheidea,inordertohelpAsfaq,yourtaskisto-writeaJavaprogramthatcanfindthehighestnumbersfrom4integerarraysconcurrentlyandnext,compute themaximumofthesehighestnumbersandprintthemaximumnumber.Considerthearraysas {3,1,-5,10},{-2,6,7,8,0},{12,-6,4,2,1},{10,5,-9,18,7}.
+public class ConcurrentMaxFinder {
+
+    // Class to handle finding the maximum in an array
+    static class MaxFinder extends Thread {
+        private int[] array;
+        private int maxValue;
+
+        public MaxFinder(int[] array) {
+            this.array = array;
+        }
+
+        @Override
+        public void run() {
+            maxValue = findMax(array);
+        }
+
+        public int getMaxValue() {
+            return maxValue;
+        }
+
+        private int findMax(int[] array) {
+            int max = array[0];
+            for (int num : array) {
+                if (num > max) {
+                    max = num;
+                }
+            }
+            return max;
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        // The four integer arrays
+        int[] array1 = {3, 1, -5, 10};
+        int[] array2 = {-2, 6, 7, 8, 0};
+        int[] array3 = {12, -6, 4, 2, 1};
+        int[] array4 = {10, 5, -9, 18, 7};
+
+        // Create thread objects
+        MaxFinder maxFinder1 = new MaxFinder(array1);
+        MaxFinder maxFinder2 = new MaxFinder(array2);
+        MaxFinder maxFinder3 = new MaxFinder(array3);
+        MaxFinder maxFinder4 = new MaxFinder(array4);
+
+        // Start all threads
+        maxFinder1.start();
+        maxFinder2.start();
+        maxFinder3.start();
+        maxFinder4.start();
+
+        // Wait for all threads to finish
+        maxFinder1.join();
+        maxFinder2.join();
+        maxFinder3.join();
+        maxFinder4.join();
+
+        // Find the maximum value among the highest values from each array
+        int maxOfMax = Math.max(maxFinder1.getMaxValue(), Math.max(maxFinder2.getMaxValue(),
+                Math.max(maxFinder3.getMaxValue(), maxFinder4.getMaxValue())));
+
+        // Print the result
+        System.out.println("The maximum of the highest numbers from the arrays is: " + maxOfMax);
+    }
 }
+
+
+
+
+)Suppose thatyouaregivena text filenamed“input.txt”withrandomtexts.Nowyouhavetocheckhow manyconsonantsareinthefileandwriteittoanothertextfilenamed“output.txt”.Forexample,iftheinputfile containsthefollowingtext-“Don’tbeupset”,youshouldwrite“7”intheoutputfile.Boththefilesshouldbe inthe“src”directory.Now,writeaprograminJavatoperformthistask
+import java.io.*;
+
+public class ConsonantCounter {
+    public static void main(String[] args) {
+        // File paths for input and output files
+        String inputFilePath = "src/input.txt";
+        String outputFilePath = "src/output.txt";
+
+        try {
+            // Read the content from the input file
+            BufferedReader reader = new BufferedReader(new FileReader(inputFilePath));
+            StringBuilder text = new StringBuilder();
+            String line;
+
+            // Read each line of the file
+            while ((line = reader.readLine()) != null) {
+                text.append(line).append(" "); // Append each line and space between lines
+            }
+            reader.close(); // Close the reader
+
+            // Count consonants in the text
+            int consonantCount = countConsonants(text.toString());
+
+            // Write the consonant count to the output file
+            BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilePath));
+            writer.write(String.valueOf(consonantCount));
+            writer.close(); // Close the writer
+
+            System.out.println("Consonant count written to output.txt: " + consonantCount);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Method to count consonants in a given text
+    public static int countConsonants(String text) {
+        int count = 0;
+        // Convert the text to lowercase for easier matching
+        text = text.toLowerCase();
+
+        // Loop through each character of the text
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            // Check if the character is a consonant (i.e., an alphabetic character that's not a vowel)
+            if (Character.isLetter(c) && !isVowel(c)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    // Helper method to check if a character is a vowel
+    public static boolean isVowel(char c) {
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
+    }
+}
+
 
 
                          
